@@ -4,12 +4,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,5 +73,15 @@ public class EtsyComPageObject extends BasePageObject{
     public List<String> getSearchResultAppliedFilters() {
         captureScreenShot();
         return findEllementsWithWait(By.className("tag")).stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    public void navigateTo(String...categories) {
+        List<String> cats = Arrays.asList(categories);
+        Actions builder = new Actions(webDriver);
+        Actions clickOnNestedItem = builder.moveToElement(findElementWithWait(By.xpath(
+                String.format("//span[contains(.,'Home & Living')]",cats.get(0)))))
+                .pause(Duration.ofSeconds(1))
+                .click();
+        clickOnNestedItem.perform();
     }
 }

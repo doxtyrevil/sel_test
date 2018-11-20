@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
@@ -23,5 +24,13 @@ public class SmokeEtsyComTest extends PageObjectTestBase {
         assertThat(appliedFilters, containsInAnyOrder(
                 "Free shipping", "Ships to Poland"
         ));
+    }
+
+    @Test
+    public void navigateToCategoryByAnimatedmenu(){
+        etsyCom = new EtsyComPageObject(webDriver);
+        etsyCom.goToMainPage();
+        etsyCom.navigateTo("Home Living", "Home", "Clocks");
+        assertThat("Check", webDriver.getTitle().contains("Clocks"));
     }
 }
