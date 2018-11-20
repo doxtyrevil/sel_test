@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,11 @@ public class EtsyComPageObject extends BasePageObject{
     public EtsyComPageObject acceptGDPRPolicy(){
         By gdprPopUpButtonBy = new By.ByXPath(ACCEPT_GDPR_BUTTON);
         WebElement gdprPoUpButton = webDriver.findElement(gdprPopUpButtonBy);
+        try {
+            captureElementScreenshot(gdprPoUpButton);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         gdprPoUpButton.click();
 
         Assert.assertTrue(new WebDriverWait(webDriver, 10).until(ExpectedConditions.invisibilityOfElementLocated(gdprPopUpButtonBy)));
